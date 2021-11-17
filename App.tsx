@@ -1,5 +1,6 @@
+import 'react-native-gesture-handler';
+
 import React from 'react';
-import { StatusBar } from 'react-native';
 
 import {
   useFonts,
@@ -12,6 +13,8 @@ import {
   Archivo_500Medium,
   Archivo_600SemiBold,
 } from '@expo-google-fonts/archivo';
+
+import { Routes } from './src/routes';
 
 import { ThemeProvider } from 'styled-components';
 import { Home } from './src/screens/Home';
@@ -32,7 +35,7 @@ export default function App() {
   }
   return (
     <ThemeProvider theme={theme}>
-      <Home />
+      <Routes />
     </ThemeProvider>
   );
 }

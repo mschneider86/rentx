@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
 
 import { Container, Header, HeaderContent, TotalCars, CarList } from './styles';
@@ -8,6 +9,8 @@ import Logo from '../../assets/logo.svg';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 export function Home() {
+  const navigation = useNavigation();
+
   const carData = {
     make: 'Audi',
     model: 'RS S Coupé',
@@ -18,6 +21,10 @@ export function Home() {
     thumbnail:
       'https://www.webmotors.com.br/imagens/prod/347501/AUDI_TT_RS_2.5_TFSI_GASOLINA_QUATTRO_STRONIC_34750116195765418.png?s=fill&w=275&h=183&q=70&t=true',
   };
+
+  function handleCarDetails() {
+    navigation.navigate('CarDetails');
+  }
 
   return (
     <Container>
@@ -37,7 +44,9 @@ export function Home() {
       <CarList
         data={[1, 2, 3]}
         keyExtractor={(item) => String(item)}
-        renderItem={({ item }) => <Car data={carData} />}
+        renderItem={({ item }) => (
+          <Car data={carData} onPress={handleCarDetails} />
+        )}
       />
     </Container>
   );
