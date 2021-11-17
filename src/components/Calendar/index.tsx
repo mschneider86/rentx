@@ -60,7 +60,7 @@ export function Calendar() {
         <Feather
           size={24}
           color={theme.colors.text}
-          name={direction == 'left' ? 'crevron-left' : 'chevron-right'}
+          name={direction == 'left' ? 'chevron-left' : 'chevron-right'}
         />
       )}
       headerStyle={{
@@ -74,6 +74,7 @@ export function Calendar() {
         textDayFontFamily: theme.fonts.primary_400,
         textDayHeaderFontFamily: theme.fonts.primary_500,
         textDayHeaderFontSize: 10,
+
         textMonthFontFamily: theme.fonts.secondary_600,
         textMonthFontSize: 20,
         monthTextColor: theme.colors.title,
