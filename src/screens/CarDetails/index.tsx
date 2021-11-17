@@ -75,7 +75,7 @@ export function CarDetails() {
       </Content>
 
       <Footer>
-        <Button />
+        <Button title='' />
       </Footer>
     </Container>
   );
