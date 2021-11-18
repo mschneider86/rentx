@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useNavigation } from '@react-navigation/native';
+
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
 import { Acessory } from '../../components/Acessory';
@@ -43,6 +45,12 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 export function SchedulingDetails() {
   const theme = useTheme();
+
+  const navigation = useNavigation();
+
+  function handleConfirmRental() {
+    navigation.navigate('SchedulingComplete');
+  }
 
   return (
     <Container>
@@ -116,7 +124,11 @@ export function SchedulingDetails() {
       </Content>
 
       <Footer>
-        <Button title='' />
+        <Button
+          title='Alugar agora'
+          onPress={handleConfirmRental}
+          color={theme.colors.success}
+        />
       </Footer>
     </Container>
   );
