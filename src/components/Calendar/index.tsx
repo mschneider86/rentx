@@ -46,7 +46,6 @@ LocaleConfig.locales['pt-br'] = {
     'Sábado',
   ],
   dayNamesShort: ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'],
-  today: 'Hoje',
 };
 
 LocaleConfig.defaultLocale = 'pt-br';

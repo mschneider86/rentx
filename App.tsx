@@ -17,7 +17,6 @@ import {
 import { Routes } from './src/routes';
 
 import { ThemeProvider } from 'styled-components';
-import { Home } from './src/screens/Home';
 import AppLoading from 'expo-app-loading';
 import theme from './src/styles/theme';
 
