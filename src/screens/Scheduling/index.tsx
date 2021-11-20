@@ -26,6 +26,15 @@ import {
   Footer,
 } from './styles';
 import { StatusBar } from 'react-native';
+import { getPlatformDate } from '../../utils/getPlatformDate';
+import { format } from 'date-fns';
+
+interface RentalPeriod {
+  start: number;
+  formattedStart: string;
+  end: number;
+  formattedEnd: string;
+}
 
 export function Scheduling() {
   const [lastSelectedDate, setLastSelectedDate] = useState<DayProps>(
@@ -33,6 +42,10 @@ export function Scheduling() {
   );
   const [markedDates, setMarkedDates] = useState<MarkedDateProps>(
     {} as MarkedDateProps
+  );
+
+  const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>(
+    {} as RentalPeriod
   );
 
   const navigation = useNavigation();
@@ -58,6 +71,19 @@ export function Scheduling() {
     setLastSelectedDate(end);
     const interval = generateInterval(start, end);
     setMarkedDates(interval);
+
+    const startDate = Object.keys(interval)[0];
+    const endDate = Object.keys(interval)[Object.keys(interval).length - 1];
+
+    setRentalPeriod({
+      start: start.timestamp,
+      end: end.timestamp,
+      formattedStart: format(
+        getPlatformDate(new Date(startDate)),
+        'dd/MM/yyyy'
+      ),
+      formattedEnd: format(getPlatformDate(new Date(endDate)), 'dd/MM/yyyy'),
+    });
   }
 
   return (
@@ -77,14 +103,18 @@ export function Scheduling() {
         <RentalPeriod>
           <DateInfo>
             <DateTitle>DE</DateTitle>
-            <DateValue selected={true}>16/11/2021</DateValue>
+            <DateValue selected={!!rentalPeriod.formattedStart}>
+              {rentalPeriod.formattedStart}
+            </DateValue>
           </DateInfo>
 
           <ArrowSvg />
 
           <DateInfo>
             <DateTitle>ATÉ</DateTitle>
-            <DateValue selected={false}></DateValue>
+            <DateValue selected={!!rentalPeriod.formattedEnd}>
+              {rentalPeriod.formattedEnd}
+            </DateValue>
           </DateInfo>
         </RentalPeriod>
       </Header>
