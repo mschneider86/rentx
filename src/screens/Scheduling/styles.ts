@@ -38,6 +38,7 @@ export const RentalPeriod = styled.View`
 
   margin: 32px 0;
 `;
+
 export const DateInfo = styled.View`
   width: 30%;
 `;
