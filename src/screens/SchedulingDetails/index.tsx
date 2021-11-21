@@ -41,6 +41,8 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { CarDTO } from '../../dtos/carDTO';
 import { format } from 'date-fns';
 import { getPlatformDate } from '../../utils/getPlatformDate';
+import { api } from '../../services/api';
+import { Alert } from 'react-native';
 
 interface Params {
   car: CarDTO;
@@ -66,8 +68,25 @@ export function SchedulingDetails() {
 
   const rentTotal = Number(dates.length * car.rent.price);
 
-  function handleConfirmRental() {
-    navigation.navigate('SchedulingComplete');
+  async function handleConfirmRental() {
+    try {
+      const schedulesByCar = await api.get(`/schedules_bycars/${car.id}`);
+
+      const unavailable_dates = [
+        ...schedulesByCar.data.unavailable_dates,
+        ...dates,
+      ];
+
+      await api.put(`/schedules_bycars/${car.id}`, {
+        id: car.id,
+        unavailable_dates,
+      });
+
+      navigation.navigate('SchedulingComplete');
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Erro', 'Não foi possível realizar o agendamento.');
+    }
   }
 
   function handleBackButton() {
