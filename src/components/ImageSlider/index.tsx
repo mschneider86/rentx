@@ -14,14 +14,15 @@ interface ImageSliderProps {
 }
 
 interface ChangeImageProps {
-  viewableItens: ViewToken[];
+  viewableItems: ViewToken[];
   changed: ViewToken[];
 }
 
 export function ImageSlider({ imagesUrl }: ImageSliderProps) {
   const [imageIndex, setImageIndex] = useState(0);
+
   const indexChanged = useRef((info: ChangeImageProps) => {
-    const index = info.viewableItens[0].index!;
+    const index = info.viewableItems[0].index!;
     setImageIndex(index);
   });
 
@@ -29,7 +30,7 @@ export function ImageSlider({ imagesUrl }: ImageSliderProps) {
     <Container>
       <ImageIndexes>
         {imagesUrl.map((_, index) => {
-          <ImageIndex active={index === imageIndex} key={String(index)} />;
+          <ImageIndex key={String(index)} active={index === imageIndex} />;
         })}
       </ImageIndexes>
 
