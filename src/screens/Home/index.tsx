@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { Container, Header, HeaderContent, TotalCars, CarList } from './styles';
 import { Car } from '../../components/Car';
-import { Load } from '../../components/Load';
+import { LoadAnimation } from '../../components/LoadAnimation';
 
 import Logo from '../../assets/logo.svg';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -105,7 +105,7 @@ export function Home() {
       </Header>
 
       {loading ? (
-        <Load />
+        <LoadAnimation />
       ) : (
         <CarList
           data={cars}
