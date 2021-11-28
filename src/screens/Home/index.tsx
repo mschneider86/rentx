@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { StatusBar, StyleSheet } from 'react-native';
+import { StatusBar, StyleSheet, BackHandler } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { Container, Header, HeaderContent, TotalCars, CarList } from './styles';
@@ -13,7 +13,11 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { api } from '../../services/api';
 import { CarDTO } from '../../dtos/CarDTO';
 import { useTheme } from 'styled-components';
-import { RectButton, PanGestureHandler } from 'react-native-gesture-handler';
+import {
+  RectButton,
+  PanGestureHandler,
+  TapGestureHandler,
+} from 'react-native-gesture-handler';
 
 import Animated, {
   useSharedValue,
@@ -77,6 +81,12 @@ export function Home() {
     }
 
     fetchCars();
+  }, []);
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      return true;
+    });
   }, []);
 
   return (
