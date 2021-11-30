@@ -2,6 +2,7 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 
 import { Button } from '../../components/Button';
+import theme from '../../styles/theme';
 
 import { Container, Header, Title, SubTitle, Footer } from './styles';
 
@@ -29,6 +30,8 @@ export function SignIn() {
         />
         <Button
           title='Criar conta gratuita'
+          color={theme.colors.background_secondary}
+          light
           onPress={() => {}}
           enabled={false}
           loading={false}
