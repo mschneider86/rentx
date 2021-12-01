@@ -34,8 +34,8 @@ export function PasswordInput({ iconName, value, ...rest }: InputProps) {
   }
 
   return (
-    <Container isFocused={isFocused}>
-      <IconContainer>
+    <Container>
+      <IconContainer isFocused={isFocused}>
         <Feather
           name={iconName}
           size={24}
@@ -46,14 +46,16 @@ export function PasswordInput({ iconName, value, ...rest }: InputProps) {
       </IconContainer>
 
       <InputText
-        secureTextEntry={isPasswordVisible}
-        {...rest}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
+        secureTextEntry={isPasswordVisible}
+        autoCorrect={false}
+        isFocused={isFocused}
+        {...rest}
       />
 
       <BorderlessButton onPress={handlePasswordVisibilityChange}>
-        <IconContainer>
+        <IconContainer isFocused={isFocused}>
           <Feather
             name={isPasswordVisible ? 'eye' : 'eye-off'}
             size={24}
