@@ -24,6 +24,8 @@ import { Bullet } from '../../../components/Bullet';
 import { PasswordInput } from '../../../components/PasswordInput';
 import { Button } from '../../../components/Button';
 
+import { Confirmation } from '../../Confirmation';
+
 interface Params {
   user: {
     name: string;
@@ -54,6 +56,12 @@ export function SignUpSecondStep() {
     if (password != passwordConfirmation) {
       return Alert.alert('As senhas devem ser iguais.');
     }
+
+    navigation.navigate('Confirmation', {
+      nextScreenRoute: 'SignIn',
+      title: 'Conta Criada!',
+      message: `Agora é só fazer login\ne aproveitar.`,
+    });
   }
 
   return (

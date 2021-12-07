@@ -94,7 +94,12 @@ export function SchedulingDetails() {
         unavailable_dates,
       });
 
-      navigation.navigate('SchedulingComplete');
+      navigation.navigate('Confirmation', {
+        nextScreenRoute: 'Home',
+        title: 'Carro alugado!',
+        message: `Agora você só precisa ir \n até a concessionária da RENTX \n
+        pegar o seu automóvel.`,
+      });
     } catch (error) {
       console.log(error);
       Alert.alert('Erro', 'Não foi possível realizar o agendamento.');
