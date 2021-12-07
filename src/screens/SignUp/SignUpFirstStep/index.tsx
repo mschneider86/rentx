@@ -24,7 +24,7 @@ import { Button } from '../../../components/Button';
 export function SignUpFirstStep() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [driverLicense, setDriverLicense] = useState(0);
+  const [driverLicense, setDriverLicense] = useState('0');
 
   const navigation = useNavigation();
 
@@ -71,7 +71,7 @@ export function SignUpFirstStep() {
               placeholder='CNH'
               keyboardType='numeric'
               value={driverLicense}
-              onChangeText={(value) => setDriverLicense(Number)}
+              onChangeText={setDriverLicense}
             />
           </Form>
 
