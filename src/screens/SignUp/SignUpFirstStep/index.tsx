@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from 'react-native';
 
 import {
@@ -20,6 +21,7 @@ import { BackButton } from '../../../components/BackButton';
 import { Bullet } from '../../../components/Bullet';
 import { Input } from '../../../components/Input';
 import { Button } from '../../../components/Button';
+import * as Yup from 'yup';
 
 export function SignUpFirstStep() {
   const [name, setName] = useState('');
@@ -32,8 +34,25 @@ export function SignUpFirstStep() {
     navigation.goBack();
   }
 
-  function handleNextStep() {
-    navigation.navigate('SignUpSecondStep');
+  async function handleNextStep() {
+    try {
+      const schema = Yup.object().shape({
+        driverLicense: Yup.string().required('CNH é obrigatória'),
+        email: Yup.string()
+          .email('E-mail inválido')
+          .required('E-mail é obrigatório'),
+        name: Yup.string().required('Nome é obrigatório'),
+      });
+
+      const data = { name, email, driverLicense };
+      await schema.validate(data);
+
+      navigation.navigate('SignUpSecondStep', { user: data });
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        Alert.alert('Oops!', error.message);
+      }
+    }
   }
 
   return (

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from 'react-native';
 
 import { useTheme } from 'styled-components';
@@ -17,19 +18,42 @@ import {
   Form,
   FormTitle,
 } from './styles';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { BackButton } from '../../../components/BackButton';
 import { Bullet } from '../../../components/Bullet';
 import { PasswordInput } from '../../../components/PasswordInput';
 import { Button } from '../../../components/Button';
 
-export function SignUpSecondStep() {
-  const navigation = useNavigation();
+interface Params {
+  user: {
+    name: string;
+    email: string;
+    driverLicense: string;
+  };
+}
 
+export function SignUpSecondStep() {
+  const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+
+  const navigation = useNavigation();
+  const route = useRoute();
   const theme = useTheme();
+
+  const { user } = route.params as Params;
 
   function handleGoBack() {
     navigation.goBack();
+  }
+
+  function handleRegister() {
+    if (!password || !passwordConfirmation) {
+      return Alert.alert('Informe e confirme sua senha.');
+    }
+
+    if (password != passwordConfirmation) {
+      return Alert.alert('As senhas devem ser iguais.');
+    }
   }
 
   return (
@@ -49,14 +73,24 @@ export function SignUpSecondStep() {
 
           <Form>
             <FormTitle>2. Senha</FormTitle>
-            <PasswordInput iconName='lock' placeholder='Senha' />
-            <PasswordInput iconName='lock' placeholder='Confirmar Senha' />
+            <PasswordInput
+              iconName='lock'
+              placeholder='Senha'
+              value={password}
+              onChangeText={setPassword}
+            />
+            <PasswordInput
+              iconName='lock'
+              placeholder='Confirmar Senha'
+              value={passwordConfirmation}
+              onChangeText={setPasswordConfirmation}
+            />
           </Form>
 
           <Button
             title='Cadastrar'
             color={theme.colors.success}
-            onPress={() => {}}
+            onPress={handleRegister}
           />
         </Container>
       </TouchableWithoutFeedback>
