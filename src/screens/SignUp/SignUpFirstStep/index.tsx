@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   KeyboardAvoidingView,
@@ -22,6 +22,10 @@ import { Input } from '../../../components/Input';
 import { Button } from '../../../components/Button';
 
 export function SignUpFirstStep() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [driverLicense, setDriverLicense] = useState(0);
+
   const navigation = useNavigation();
 
   function handleGoBack() {
@@ -49,16 +53,25 @@ export function SignUpFirstStep() {
 
           <Form>
             <FormTitle>1. Dados</FormTitle>
-            <Input iconName='user' placeholder='Nome' />
+            <Input
+              iconName='user'
+              placeholder='Nome'
+              value={name}
+              onChangeText={setName}
+            />
             <Input
               iconName='mail'
               placeholder='E-mail'
               keyboardType='email-address'
+              value={email}
+              onChangeText={setEmail}
             />
             <Input
               iconName='credit-card'
               placeholder='CNH'
               keyboardType='numeric'
+              value={driverLicense}
+              onChangeText={(value) => setDriverLicense(Number)}
             />
           </Form>
 
