@@ -89,7 +89,7 @@ export function SignIn() {
             <Button
               title='Login'
               onPress={handleSignIn}
-              enabled={false}
+              enabled
               loading={false}
             />
             <Button
@@ -97,7 +97,7 @@ export function SignIn() {
               color={theme.colors.background_secondary}
               light
               onPress={handleCreateAccount}
-              enabled={false}
+              enabled
               loading={false}
             />
           </Footer>
