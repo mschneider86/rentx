@@ -1,4 +1,5 @@
 import React from 'react';
+import { AppProvider } from './src/hooks';
 
 import {
   useFonts,
@@ -32,7 +33,9 @@ export default function App() {
   }
   return (
     <ThemeProvider theme={theme}>
-      <Routes />
+      <AppProvider>
+        <Routes />
+      </AppProvider>
     </ThemeProvider>
   );
 }
