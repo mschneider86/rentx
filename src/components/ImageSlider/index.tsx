@@ -41,11 +41,6 @@ export function ImageSlider({ imagesUrl }: ImageSliderProps) {
         showsHorizontalScrollIndicator={false}
         onViewableItemsChanged={indexChanged.current}
       />
-      <ImageIndexes>
-        {imagesUrl.map((_, index) => {
-          <Bullet key={String(index)} active={index === imageIndex} />;
-        })}
-      </ImageIndexes>
     </Container>
   );
 }
