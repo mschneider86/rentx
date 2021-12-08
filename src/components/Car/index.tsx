@@ -28,13 +28,13 @@ export function Car({ data, ...rest }: CarProps) {
   return (
     <Container {...rest}>
       <Details>
-        <Make>{data.make}</Make>
-        <Model>{data.model}</Model>
+        <Make>{data.brand}</Make>
+        <Model>{data.name}</Model>
 
         <About>
           <Rent>
-            <Period>{data.rent.period}</Period>
-            <Price>{`R$ ${data.rent.price}`}</Price>
+            <Period>{data.period}</Period>
+            <Price>{`R$ ${data.price}`}</Price>
           </Rent>
 
           <Type>

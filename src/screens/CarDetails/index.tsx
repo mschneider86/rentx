@@ -115,13 +115,13 @@ export function CarDetails() {
       >
         <Details>
           <Description>
-            <Make>{car.make}</Make>
-            <Model>{car.model}</Model>
+            <Make>{car.brand}</Make>
+            <Model>{car.name}</Model>
           </Description>
 
           <Rent>
-            <Period>{car.rent.period}</Period>
-            <Price>R$ {car.rent.price}</Price>
+            <Period>{car.period}</Period>
+            <Price>R$ {car.price}</Price>
           </Rent>
         </Details>
 
