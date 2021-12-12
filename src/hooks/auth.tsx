@@ -5,16 +5,14 @@ import {User as UserModel} from '../database/model/User';
 
 interface User {
   id: string;
+  user_id: string;
   email: string;
   name: string;
   driver_license: string;
   avatar: string;
+  token: string;
 }
 
-interface AuthState {
-  token: string;
-  user: User;
-}
 
 interface SignInCredentials {
   email: string;
@@ -33,7 +31,7 @@ interface AuthProviderProps {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 function AuthProvider({ children }: AuthProviderProps) {
-  const [data, setData] = useState<AuthState>({} as AuthState);
+  const [data, setData] = useState<User>({} as User);
 
   async function signIn({ email, password }: SignInCredentials) {
     try {
@@ -57,7 +55,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         })
       })
 
-      setData({ token, user });
+      setData({ ...user, token });
     } catch (error) {
       throw new Error(error);
     }
@@ -66,7 +64,7 @@ function AuthProvider({ children }: AuthProviderProps) {
   return (
     <AuthContext.Provider
       value={{
-        user: data.user,
+        user: data,
         signIn,
       }}
     >
