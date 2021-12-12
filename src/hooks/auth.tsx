@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import { api } from '../services/api';
 import { database } from '../database';
 import {User as UserModel} from '../database/model/User';
@@ -60,6 +60,20 @@ function AuthProvider({ children }: AuthProviderProps) {
       throw new Error(error);
     }
   }
+
+  useEffect(() => {
+    async function loadUserData(){
+      const userCollection = database.get<UserModel>('users');
+      const response = await userCollection.query().fetch();
+
+      if(response.length > 0) {
+        const userData = response[0]._raw as unknown as User;
+        api.defaults.headers.authorization = `Bearer ${userData.token}`
+        setData(userData)
+      }
+    }
+    loadUserData();
+  },[]);
 
   return (
     <AuthContext.Provider
