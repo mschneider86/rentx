@@ -40,11 +40,11 @@ export function Profile() {
   const theme = useTheme();
   const navigation = useNavigation();
 
-  function handleSignOut() {
+  function handleGoBack() {
     navigation.goBack();
   }
 
-  function handleLogout() {}
+  function handleSignOut() {}
 
   function handleOptionChange(selectedOption: 'dataEdit' | 'passwordEdit') {
     setOption(selectedOption);
@@ -56,9 +56,9 @@ export function Profile() {
         <Container>
           <Header>
             <HeaderTop>
-              <BackButton color={theme.colors.shape} onPress={handleSignOut} />
+              <BackButton color={theme.colors.shape} onPress={handleGoBack} />
               <HeaderTitle>Editar Perfil</HeaderTitle>
-              <LogoutButton onPress={handleLogout}>
+              <LogoutButton onPress={handleSignOut}>
                 <Feather name='power' size={24} color={theme.colors.shape} />
               </LogoutButton>
             </HeaderTop>
