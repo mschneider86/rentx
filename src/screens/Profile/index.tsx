@@ -8,6 +8,8 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useTheme } from 'styled-components';
+import { useAuth } from '../../hooks/auth';
+
 import { Feather } from '@expo/vector-icons';
 
 import { BackButton } from '../../components/BackButton';
@@ -32,6 +34,8 @@ import {
 
 export function Profile() {
   const [option, setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
+
+  const { user } = useAuth();
 
   const theme = useTheme();
   const navigation = useNavigation();
@@ -91,12 +95,18 @@ export function Profile() {
                   iconName='power'
                   placeholder='Nome'
                   autoCorrect={false}
+                  defaultValue={user.name}
                 />
-                <Input iconName='mail' editable={false} />
+                <Input
+                  iconName='mail'
+                  editable={false}
+                  defaultValue={user.email}
+                />
                 <Input
                   iconName='credit-card'
                   placeholder='CNH'
                   keyboardType='numeric'
+                  defaultValue={user.driver_license}
                 />
               </Section>
             ) : (
