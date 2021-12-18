@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, StatusBar, FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 
 import { BackButton } from '../../components/BackButton';
@@ -40,6 +40,8 @@ export function MyCars() {
   const [cars, setCars] = useState<DataProps[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const screenIsFocused = useIsFocused();
+
   const navigation = useNavigation();
   const theme = useTheme();
 
@@ -70,7 +72,8 @@ export function MyCars() {
     }
 
     fetchCars();
-  }, []);
+  }, [screenIsFocused]);
+
   return (
     <Container>
       <Header>
