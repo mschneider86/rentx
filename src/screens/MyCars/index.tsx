@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, StatusBar, FlatList } from 'react-native';
-import { CarDTO } from '../../dtos/carDTO';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 
@@ -29,14 +28,6 @@ import {
   CarFooterPeriod,
   CarFooterDate,
 } from './styles';
-
-interface CarProps {
-  id: string;
-  user_id: string;
-  car: CarDTO;
-  startDate: string;
-  endDate: string;
-}
 
 interface DataProps {
   id: string;
