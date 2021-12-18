@@ -43,6 +43,7 @@ import { format } from 'date-fns';
 import { getPlatformDate } from '../../utils/getPlatformDate';
 import { api } from '../../services/api';
 import { Alert } from 'react-native';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 interface Params {
   car: CarDTO;
@@ -55,10 +56,13 @@ interface RentalPeriod {
 }
 
 export function SchedulingDetails() {
+  const [updatedCar, setUpdatedCar] = useState<CarDTO>({} as CarDTO);
   const [loading, setLoading] = useState(false);
   const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>(
     {} as RentalPeriod
   );
+
+  const netInfo = useNetInfo();
 
   const theme = useTheme();
 
@@ -72,26 +76,13 @@ export function SchedulingDetails() {
   async function handleConfirmRental() {
     try {
       setLoading(true);
-      const schedulesByCar = await api.get(`/schedules_bycars/${car.id}`);
 
-      const unavailable_dates = [
-        ...schedulesByCar.data.unavailable_dates,
-        ...dates,
-      ];
-
-      await api.post('/schedules_byuser', {
+      await api.post('/rentals', {
         user_id: 1,
-        car,
-        startDate: format(getPlatformDate(new Date(dates[0])), 'dd/MM/yyyy'),
-        endDate: format(
-          getPlatformDate(new Date(dates[dates.length - 1])),
-          'dd/MM/yyyy'
-        ),
-      });
-
-      await api.put(`/schedules_bycars/${car.id}`, {
-        id: car.id,
-        unavailable_dates,
+        car_id: car.id,
+        start_ate: new Date(dates[0]),
+        end_date: new Date(dates[dates.length - 1]),
+        total: rentTotal,
       });
 
       navigation.navigate('Confirmation', {
@@ -121,6 +112,16 @@ export function SchedulingDetails() {
     });
   }, []);
 
+  useEffect(() => {
+    async function fetchUpdatedCars() {
+      const response = await api.get(`/cars/${car.id}`);
+      setUpdatedCar(response.data);
+    }
+    if (netInfo.isConnected === true) {
+      fetchUpdatedCars();
+    }
+  }, [netInfo.isConnected]);
+
   return (
     <Container>
       <Header>
@@ -128,7 +129,13 @@ export function SchedulingDetails() {
       </Header>
 
       <CarImages>
-        <ImageSlider imagesUrl={car.photos} />
+        <ImageSlider
+          imagesUrl={
+            !!updatedCar.photos
+              ? updatedCar.photos
+              : [{ id: car.thumbnail, photo: car.thumbnail }]
+          }
+        />
       </CarImages>
 
       <Content>
@@ -144,15 +151,17 @@ export function SchedulingDetails() {
           </Rent>
         </Details>
 
-        <Accessories>
-          {car.accessories.map((accessory) => (
-            <Acessory
-              key={accessory.type}
-              name={accessory.name}
-              icon={getAccessoryIcon(accessory.type)}
-            />
-          ))}
-        </Accessories>
+        {updatedCar.accessories && (
+          <Accessories>
+            {updatedCar.accessories.map((accessory) => (
+              <Acessory
+                key={accessory.type}
+                name={accessory.name}
+                icon={getAccessoryIcon(accessory.type)}
+              />
+            ))}
+          </Accessories>
+        )}
 
         <RentalPeriod>
           <CalendarIcon>
